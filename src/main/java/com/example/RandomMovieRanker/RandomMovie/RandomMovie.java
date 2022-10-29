@@ -2,8 +2,13 @@ package com.example.RandomMovieRanker.RandomMovie;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
 public class RandomMovie {
+    @Id
     private String _id;
     private String name;
     private int releaseYear;

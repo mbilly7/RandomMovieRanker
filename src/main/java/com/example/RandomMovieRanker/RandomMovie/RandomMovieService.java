@@ -1,5 +1,6 @@
 package com.example.RandomMovieRanker.RandomMovie;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,26 +12,27 @@ import java.util.List;
 public class RandomMovieService {
     private RestTemplate restTemplate = new RestTemplate();
 
+    @Autowired
+    private RandomMovieRepository randomMovieRepository;
+
     List<RandomMovie> movies = new ArrayList<>();
 
     public RandomMovie getRandomMovie() {
         RandomMovie randomMovie = restTemplate.getForObject(
                 "https://k2maan-moviehut.herokuapp.com/api/random", RandomMovie.class);
 
-        movies.add(randomMovie);
+        randomMovieRepository.save(randomMovie);
 
         return randomMovie;
     }
 
     public List<RandomMovie> getMovies() {
-        return movies;
+        return randomMovieRepository.findAll();
     }
 
     public void setUserRating(String userRating, String id) {
-        for (RandomMovie movie : movies) {
-            if (movie.get_id().equals(id)) {
-                movie.setUserRating(Double.parseDouble(userRating));
-            }
-        }
+        RandomMovie randomMovie = randomMovieRepository.findBy_id(id);
+        randomMovie.setUserRating(Double.parseDouble(userRating));
+        randomMovieRepository.save(randomMovie);
     }
 }
