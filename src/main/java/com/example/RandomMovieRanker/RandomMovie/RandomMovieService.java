@@ -10,7 +10,8 @@ import java.util.List;
 
 @Service
 public class RandomMovieService {
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Autowired
     private RandomMovieRepository randomMovieRepository;

@@ -7,22 +7,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class RandomMovieController {
     @Autowired
     RandomMovieService randomMovieService;
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="Billy") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
-    }
-    @RequestMapping("/randomMovie")
+    @GetMapping("/randomMovie")
     public RandomMovie getRandomMovie() {
         return randomMovieService.getRandomMovie();
     }
 
-    @RequestMapping("/randomMovieList")
+    @GetMapping("/randomMovieList")
     public List<RandomMovie> getRandomMovieList() {
         return randomMovieService.getMovies();
     }
